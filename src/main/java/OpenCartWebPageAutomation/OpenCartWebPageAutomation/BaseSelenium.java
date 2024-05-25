@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -57,7 +58,20 @@ public class BaseSelenium {
 	public By getBy(String locator) {
 		return getBy("xpath", locator);
 	}
+	
+	public boolean isElementPresent(String locatorType, String locator) {
+	    try {
+	        getWebElement(locatorType, locator);
+	        return true;
+	      } catch (NoSuchElementException e) {
+	        return false;
+	      }
+	    }
 
+	public boolean isElementPresent(String locator) {
+	    return isElementPresent("xpath", locator);
+	    }
+	
 	public WebElement getWebElement(String locatorType, String locator) {
 		WebElement webElement;
 		By byElement = getBy(locatorType, locator);
